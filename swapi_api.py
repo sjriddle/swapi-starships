@@ -32,6 +32,7 @@ def starship_pilots(film_input=sys.argv[1]):
               f'[+] Attack of the Clones\n'
               f'[+] Revenge of the Sith\n'
               f'[+] The Force Awakens')
+        sys.exit(1)
 
     response = requests.get(f'https://swapi.co/api/films/{film_id}')
     if response.status_code == 200:
@@ -57,6 +58,7 @@ def starship_pilots(film_input=sys.argv[1]):
             result.append(output_object)
             pilot_list = []
     print(result)
+    sys.exit(0)
 
 
 if __name__ == '__main__':
