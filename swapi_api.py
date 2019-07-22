@@ -3,10 +3,12 @@ import json
 import sys
 
 
-def main(film_input=sys.argv[1]):
-    api_url = 'https://swapi.co/api/'
-    film_id = 0
+def starship_pilots(film_input=sys.argv[1]):
+    result = []
     pilot_list = []
+    film_id = 0
+    pilot_check = {}
+
     if film_input.lower() == 'a new hope':
         film_id = 1
     elif film_input.lower() == 'the empire strikes back':
@@ -19,10 +21,10 @@ def main(film_input=sys.argv[1]):
         film_id = 5
     elif film_input.lower() == 'revenge of the sith':
         film_id = 6
-    elif film_input.lower == 'the force awakens':
+    elif film_input.lower() == 'the force awakens':
         film_id = 7
     else:
-        print(f'{film_input} is not a valid input. The input one of the following:\n\n'
+        print(f'"{film_input}" is not a valid input. Plase input one of the following:\n'
               f'[+] A New Hope\n'
               f'[+] The Empire Strikes Back\n'
               f'[+] Return of the Jedi\n'
@@ -31,25 +33,31 @@ def main(film_input=sys.argv[1]):
               f'[+] Revenge of the Sith\n'
               f'[+] The Force Awakens')
 
-    response = requests.get(f'{api_url}films/{film_id}')
+    response = requests.get(f'https://swapi.co/api/films/{film_id}')
     if response.status_code == 200:
         output = json.loads(response.content.decode('utf-8'))
         for ship in output['starships']:
             ship_response = requests.get(ship)
             ship_output = json.loads(ship_response.content.decode('utf-8'))
             for pilot in ship_output['pilots']:
-                pilot_response = requests.get(pilot)
-                pilot_output = json.loads(pilot_response.content.decode('utf-8'))
-                pilot_list.append(pilot_output['name'])
-            result = {
+                if pilot in pilot_check.values():
+                    pilot_list.append(pilot_check.keys())
+                else:
+                    pilot_response = requests.get(pilot)
+                    pilot_output = json.loads(pilot_response.content.decode('utf-8'))
+                    pilot_check.update({pilot_output['name']: pilot})
+                    pilot_list.append(pilot_output['name'])
+
+            output_object = {
                 "name": ship_output['name'],
                 "pilots": {
                     json.dumps(pilot_list)
                 }
             }
-            print(result)
+            result.append(output_object)
             pilot_list = []
+    print(result)
 
 
 if __name__ == '__main__':
-    main()
+    starship_pilots()
