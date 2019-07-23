@@ -67,7 +67,7 @@ def starship_pilots(film_input=sys.argv[1]):
             result.append(output_object)
             pilot_list = []
     json_obj = json.dumps(result, default=set_default)
-    print(json_obj)
+    print({"data": json_obj})
     sys.exit(0)
 
 
