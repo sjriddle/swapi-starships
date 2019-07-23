@@ -47,7 +47,11 @@ def starship_pilots(film_input=sys.argv[1]):
             ship_output = json.loads(ship_response.content.decode('utf-8'))
             for pilot in ship_output['pilots']:
                 if pilot in pilot_check.values():
-                    pilot_list.append(pilot_check[pilot])
+                    key_to_add = None
+                    for name, url in pilot_check.items():
+                        if pilot == url:
+                            key_to_add = name
+                    pilot_list.append(key_to_add)
                 else:
                     pilot_response = requests.get(pilot)
                     pilot_output = json.loads(pilot_response.content.decode('utf-8'))
