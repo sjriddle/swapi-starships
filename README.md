@@ -3,4 +3,4 @@
 - You can pull this from the Docker registry using the following command: `docker pull sriddle22/swapi-api`
 - An example of running this with the Docker Image is as follows: `docker run sriddle22/swapi-api "A New Hope"`
 
-![Helm Deployment](file:///home/sriddle/Pictures/helm-deployment.png)
+![Helm Deployment](/helm-deployment.png)
